@@ -40,8 +40,8 @@ const sliders = (slides, dir, prev, next) => {
 
         nextBtn.addEventListener('click', () => {
             plusSlides(1);
-            items[slideIndex - 1].classList.remove('animate__slideInLeft');
             items[slideIndex - 1].classList.add('animate__slideInRight');
+            items[slideIndex - 1].classList.remove('animate__slideInLeft');
         });
     } catch(e) {
         
@@ -52,14 +52,14 @@ const sliders = (slides, dir, prev, next) => {
             paused = setInterval(() => {
                 plusSlides(1);
                 items[slideIndex - 1].classList.add('animate__slideInDown');
-            }, 3000);
+            }, 5000);
             
             items[slideIndex - 1].classList.remove('animate__slideInDown');
         } else {
             paused = setInterval(() => {
                 plusSlides(1);
                 items[slideIndex - 1].classList.add('animate__slideInRight');
-            }, 3000);
+            }, 5000);
             items[slideIndex - 1].classList.remove('animate__slideInLeft');
             
         }
