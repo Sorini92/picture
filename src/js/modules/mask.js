@@ -2,11 +2,11 @@ const mask = (selector) => {
 
     let setCursorPosition = (pos, elem) => {
         elem.focus();
-
+        
         if (elem.setSelectionRange) {
             elem.setSelectionRange(pos, pos);
-        } else if (elem.creatTextRange) {
-            let range = elem.creatTextRange();
+        } else if (elem.createTextRange) {
+            let range = elem.createTextRange();
 
             range.collapse(true);
             range.moveEnd('character', pos);
@@ -16,10 +16,10 @@ const mask = (selector) => {
     };
 
     function createMask(event) {
-        let matrix = '+7 (___) ___ __ __',
+        let matrix = "+38 (___) ___ __ __",
             i = 0,
             def = matrix.replace(/\D/g, ''),
-            val = this.value.replace(/\D/g, '');
+            val = this.value.replace(/\D/g, ''); 
 
         if (def.length >= val.length) {
             val = def;
@@ -28,6 +28,8 @@ const mask = (selector) => {
         this.value = matrix.replace(/./g, function(a) {
             return /[_\d]/.test(a) && i < val.length ? val.charAt(i++) : i >= val.length ? '' :  a;
         });
+
+        this.value = "+38" + this.value.slice(3);   
 
         if (event.type === 'blur') {
             if (this.value.length == 2) {
