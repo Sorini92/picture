@@ -2,7 +2,8 @@
 
 const forms = () => {
     const form = document.querySelectorAll('form'),
-          inputs = document.querySelectorAll('input');
+          inputs = document.querySelectorAll('input'),
+          upload = document.querySelectorAll('[name="upload"]');
 
     //checkNumInputs('input[name="user_phone"]');
 
@@ -33,11 +34,21 @@ const forms = () => {
         inputs.forEach(item => {
             item.value = '';
         });
+        upload.forEach(item => {
+            item.previousElementSibling.textContent = 'Файл не выбран';
+        });
     };
 
-    const closeModalAfterSending = (selector, time) => {
-        setTimeout(() => closeModal(selector), time);
-    };
+    upload.forEach(item => {
+        item.addEventListener('input', () => {
+           //console.log(item.files[0]); //вывод 1 файла
+           let dots;
+           const arr = item.files[0].name.split('.');
+           arr[0].length > 6 ? dots = "..." : dots = '.';
+           const name = arr[0].substring(0, 6) + dots + arr[1];
+           item.previousElementSibling.textContent = name;
+        });
+    });
 
     form.forEach(item => {
         item.addEventListener('submit', (e) => {
@@ -63,23 +74,26 @@ const forms = () => {
 
             const formData = new FormData(item);
             let api;
-            item.closest('.popup-design') ? api = path.designer : api = path.question;
+            item.closest('.popup-design') || item.classList.contains('calc_form') ? api = path.designer : api = path.question;
 
 
             postData(api, formData)
             .then(res => {
                 console.log(res);
                 statusImg.setAttribute('src', message.ok);
-                statusMessage.textContent = message.success;
+                textMessage.textContent = message.success;
             })
-            .catch(() => statusMessage.textContent = message.failure)
+            .catch(() => {
+                statusImg.setAttribute('src', message.fail);
+                textMessage.textContent = message.failure;
+            })
             .finally(()  => {
                 clearInputs();
-                for (const prop of Object.getOwnPropertyNames(state)) {
-                    delete state[prop];
-                }
                 setTimeout(() => {
                     statusMessage.remove();
+                    item.style.display = 'block';
+                    item.classList.remove('animate__fadeOutUp');
+                    item.classList.add('animate__fadeInUp');
                 }, 10000);
             });
         });
