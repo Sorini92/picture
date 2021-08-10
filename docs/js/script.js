@@ -21945,8 +21945,8 @@ var showMoreStyles = function showMoreStyles(trigger, wrapper) {
   }); */
 
   btn.addEventListener('click', function () {
-    Object(_services_requests__WEBPACK_IMPORTED_MODULE_4__["getResource"])('http://localhost:3000/styles').then(function (res) {
-      return createCards(res);
+    Object(_services_requests__WEBPACK_IMPORTED_MODULE_4__["getResource"])('assets/db.json').then(function (res) {
+      return createCards(res.styles);
     }).catch(function (error) {
       var err = document.createElement('div');
       err.innerHTML = "\u041F\u0440\u043E\u0438\u0437\u043E\u0448\u043B\u0430 \u043E\u0448\u0438\u0431\u043A\u0430: ".concat(error.message, ", \u043F\u043E\u043F\u0440\u043E\u0431\u0443\u0439\u0442\u0435 \u043F\u043E\u0437\u0436\u0435");

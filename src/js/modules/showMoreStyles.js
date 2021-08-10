@@ -13,8 +13,8 @@ const showMoreStyles = (trigger, wrapper) => {
     }); */
 
     btn.addEventListener('click', function() {
-        getResource('http://localhost:3000/styles')
-            .then(res => createCards(res))
+        getResource('assets/db.json')
+            .then(res => createCards(res.styles))
             .catch(error => {
                 const err = document.createElement('div');
                 err.innerHTML = `Произошла ошибка: ${error.message}, попробуйте позже`;
