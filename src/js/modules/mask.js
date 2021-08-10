@@ -10,13 +10,14 @@ const mask = (selector) => {
 
             range.collapse(true);
             range.moveEnd('character', pos);
+            range.setStart(2);
             range.moveStart('character', pos);
             range.select();
         }
     };
 
     function createMask(event) {
-        let matrix = "+38 (___) ___ __ __",
+        let matrix = "+38 (___) ___-__-__",
             i = 0,
             def = matrix.replace(/\D/g, ''),
             val = this.value.replace(/\D/g, ''); 
