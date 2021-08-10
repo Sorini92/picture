@@ -11,7 +11,6 @@ const showMoreStyles = (trigger, wrapper) => {
         });
         btn.remove();
     }); */
-
     btn.addEventListener('click', function() {
         getResource('assets/db.json')
             .then(res => createCards(res.styles))
