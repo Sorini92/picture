@@ -10,7 +10,7 @@ const mask = (selector) => {
 
             range.collapse(true);
             range.moveEnd('character', pos);
-            range.setStart(2);
+            range.setStart(4);
             range.moveStart('character', pos);
             range.select();
         }
@@ -29,11 +29,11 @@ const mask = (selector) => {
         this.value = matrix.replace(/./g, function(a) {
             return /[_\d]/.test(a) && i < val.length ? val.charAt(i++) : i >= val.length ? '' :  a;
         });
-
-        this.value = "+38" + this.value.slice(3);   
+        
+        this.value = "+38 " + this.value.slice(4);   
 
         if (event.type === 'blur') {
-            if (this.value.length == 2) {
+            if (this.value.length == 4) {
                 this.value = '';
             }
         } else { 

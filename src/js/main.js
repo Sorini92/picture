@@ -15,5 +15,5 @@ window.addEventListener('DOMContentLoaded', () => {
     mask('[name="phone"]');
     checkTextInputs('[name="name"]');
     checkTextInputs('[name="message"]');
-    showMoreStyles('.button-styles', '.hidden-lg');
+    showMoreStyles('.button-styles', '#styles .row');
 });
