@@ -1,9 +1,10 @@
 import {postData} from '../services/requests'; 
 
-const forms = () => {
+const forms = (state) => {
     const form = document.querySelectorAll('form'),
-          inputs = document.querySelectorAll('input'),
-          upload = document.querySelectorAll('[name="upload"]');
+          inputs = document.querySelectorAll('input', 'textarea'),
+          upload = document.querySelectorAll('[name="upload"]'),
+          textAreas = document.querySelectorAll('textarea');
 
     const message = {
         loading: 'Загрузка',
@@ -25,6 +26,9 @@ const forms = () => {
         });
         upload.forEach(item => {
             item.previousElementSibling.textContent = 'Файл не выбран';
+        });
+        textAreas.forEach(item => {
+            item.value = '';
         });
     };
 
@@ -65,6 +69,9 @@ const forms = () => {
             let api;
             item.closest('.popup-design') || item.classList.contains('calc_form') ? api = path.designer : api = path.question;
 
+            for (let key in state) {
+                formData.append(key, state[key]);
+            }
 
             postData(api, formData)
             .then(res => {
@@ -78,6 +85,9 @@ const forms = () => {
             })
             .finally(()  => {
                 clearInputs();
+                for (const prop of Object.getOwnPropertyNames(state)) {
+                    delete state[prop];
+                }
                 setTimeout(() => {
                     statusMessage.remove();
                     item.style.display = 'block';

@@ -5,14 +5,18 @@ import mask from './modules/mask';
 import checkTextInputs from './modules/checkTextInputs';
 import showMoreStyles from './modules/showMoreStyles';
 import calc from './modules/calc';
+import changeModalState from './modules/changeModalState';
 
 window.addEventListener('DOMContentLoaded', () => {
     'use strict';
 
+    let modalState = {};
+
+    changeModalState(modalState);
     modals();
     sliders('.feedback-slider-item', 'horizontal', '.main-prev-btn', '.main-next-btn');
     sliders('.main-slider-item', 'vertical');
-    forms();
+    forms(modalState);
     mask('[name="phone"]');
     checkTextInputs('[name="name"]');
     checkTextInputs('[name="message"]');

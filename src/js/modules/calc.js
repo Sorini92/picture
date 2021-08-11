@@ -21,15 +21,17 @@ const calc = (size, material, options, promocode, result) => {
         }
     };
 
+    
+
     getResource('assets/db.json')
             .then(res => {
                 createSizes(res.options);
                 createMaterials(res.options);
+                createOptions(res.options);
             })
             .catch(error => console.log(error));
 
     function createSizes (response) {
-        console.log(response);
         response.forEach(({size, sizeValue}) => {
             let option = document.createElement('option');
             option.setAttribute('value', sizeValue);
@@ -40,14 +42,31 @@ const calc = (size, material, options, promocode, result) => {
     }
 
     function createMaterials (response) {
-        console.log(response);
         response.forEach(({material, materialValue, materialTitle}) => {
             let option = document.createElement('option');
             option.setAttribute('value', materialValue);
             option.setAttribute('title', materialTitle);
             option.innerHTML = `${material}`;
 
-            materialBlock.appendChild(option);
+            if (material === undefined || material == "" || material === null) {
+                option.remove();
+            } else {
+                materialBlock.appendChild(option);
+            }
+        });
+    }
+
+    function createOptions (response) {
+        response.forEach(({extra, extraValue}) => {
+            let option = document.createElement('option');
+            option.setAttribute('value', extraValue);
+            option.innerHTML = `${extra}`;
+
+            if (extra === undefined || extra == "" || extra === null) {
+                option.remove();
+            } else {
+                optionsBlock.appendChild(option);
+            }
         });
     }
 
