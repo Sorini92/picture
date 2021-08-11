@@ -1,4 +1,3 @@
-import { trimStart } from "lodash";
 import {getResource} from "../services/requests";
 
 const showMoreStyles = (trigger, wrapper) => {
