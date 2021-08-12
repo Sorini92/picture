@@ -17,15 +17,22 @@ const changeModalState = (state) => {
                         }
                         break;
                 }
-                console.log(picTotal[0].value);
+                picTotal.forEach(one => {
+                    let total = one.getAttribute('value');
+                    console.log(total)
+                    Object.assign(state, {total: total});
+                });
+                console.log(state);
+                
+                //state["total"] = picTotal.innerHTML;
             });
         });
     }
-
+    
     bindActionToElems('change', picSize, 'size');
     bindActionToElems('change', picMaterial, 'material');
     bindActionToElems('change', picOptions, 'extra');
-    bindActionToElems('change', picTotal, 'total');
+    //bindActionToElems('change', picTotal, 'total');
 };
 
 export default changeModalState;
