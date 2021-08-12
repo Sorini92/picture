@@ -4,19 +4,20 @@ const changeModalState = (state) => {
           picOptions = document.querySelectorAll('#options'),
           picTotal = document.querySelectorAll('.calc-price');
 
-    
     function bindActionToElems(event, elem, prop) {
         elem.forEach((item) => {
             item.addEventListener(event, () => {
                 switch(item.nodeName) {
                     case 'SELECT' :
-                        state[prop] = item.value;
+                        let index = item.selectedIndex;
+                        if (item.selectedIndex == 0) {
+                            state[prop] = "";
+                        } else {
+                            state[prop] = item[index].textContent;
+                        }
                         break;
-                    case 'DIV' :
-                        state[prop] = item;
-                        break;
-                }   
-                console.log(state);
+                }
+                console.log(picTotal[0].value);
             });
         });
     }

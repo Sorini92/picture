@@ -5517,8 +5517,10 @@ var calc = function calc(size, material, options, promocode, result) {
       resultBlock.textContent = "Пожалуйста, выберете размер и материал картины";
     } else if (promocodeBlock.value === "IWANTPOPART") {
       resultBlock.textContent = Math.round(sum * 0.7);
+      resultBlock.setAttribute('value', sum);
     } else {
       resultBlock.textContent = sum;
+      resultBlock.setAttribute('value', sum);
     }
   };
 
@@ -5537,7 +5539,12 @@ var calc = function calc(size, material, options, promocode, result) {
       var option = document.createElement('option');
       option.setAttribute('value', sizeValue);
       option.innerHTML = "".concat(size);
-      sizeBlock.appendChild(option);
+
+      if (size === undefined || size == "" || size === null) {
+        option.remove();
+      } else {
+        sizeBlock.appendChild(option);
+      }
     });
   }
 
@@ -5609,15 +5616,18 @@ var changeModalState = function changeModalState(state) {
       item.addEventListener(event, function () {
         switch (item.nodeName) {
           case 'SELECT':
-            state[prop] = item.value;
-            break;
+            var index = item.selectedIndex;
 
-          case 'DIV':
-            state[prop] = item;
+            if (item.selectedIndex == 0) {
+              state[prop] = "";
+            } else {
+              state[prop] = item[index].textContent;
+            }
+
             break;
         }
 
-        console.log(state);
+        console.log(picTotal[0].value);
       });
     });
   }
