@@ -21,8 +21,6 @@ const calc = (size, material, options, promocode, result) => {
         }
     };
 
-    
-
     getResource('assets/db.json')
             .then(res => {
                 createSizes(res.options);
