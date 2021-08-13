@@ -5461,6 +5461,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_showMoreStyles__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/showMoreStyles */ "./src/js/modules/showMoreStyles.js");
 /* harmony import */ var _modules_calc__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/calc */ "./src/js/modules/calc.js");
 /* harmony import */ var _modules_changeModalState__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/changeModalState */ "./src/js/modules/changeModalState.js");
+/* harmony import */ var _modules_changeImages__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/changeImages */ "./src/js/modules/changeImages.js");
+
 
 
 
@@ -5483,6 +5485,9 @@ window.addEventListener('DOMContentLoaded', function () {
   Object(_modules_showMoreStyles__WEBPACK_IMPORTED_MODULE_5__["default"])('.button-styles', '#styles .row');
   Object(_modules_calc__WEBPACK_IMPORTED_MODULE_6__["default"])('#size', '#material', '#options', '.promocode', '.calc-price');
   Object(_modules_changeModalState__WEBPACK_IMPORTED_MODULE_7__["default"])(modalState);
+  Object(_modules_changeImages__WEBPACK_IMPORTED_MODULE_8__["default"])('assets/img/sizes-1-1.png', 'assets/img/sizes-1.png'); //changeImages('.size-2','assets/img/sizes-2-2.png', 'assets/img/sizes-2.png');
+  //changeImages('.size-3','assets/img/sizes-3-3.png', 'assets/img/sizes-3.png');
+  //changeImages('.size-4','assets/img/sizes-4-4.png', 'assets/img/sizes-4.png');
 });
 
 /***/ }),
@@ -5507,8 +5512,7 @@ var calc = function calc(size, material, options, promocode, result) {
       materialBlock = document.querySelector(material),
       optionsBlock = document.querySelector(options),
       promocodeBlock = document.querySelector(promocode),
-      resultBlock = document.querySelector(result); //hiddenInput = document.querySelector('#hiddenfield');
-
+      resultBlock = document.querySelector(result);
   var sum = 0;
 
   var calcFunction = function calcFunction() {
@@ -5518,12 +5522,11 @@ var calc = function calc(size, material, options, promocode, result) {
       resultBlock.textContent = "Пожалуйста, выберете размер и материал картины";
       resultBlock.setAttribute('value', "0");
     } else if (promocodeBlock.value === "IWANTPOPART") {
-      resultBlock.textContent = Math.round(sum * 0.7); //hiddenInput.setAttribute('value',sum);
-
+      resultBlock.textContent = Math.round(sum * 0.7);
       resultBlock.setAttribute('value', sum);
     } else {
       resultBlock.textContent = sum;
-      resultBlock.setAttribute('value', sum); //hiddenInput.setAttribute('value',sum);
+      resultBlock.setAttribute('value', sum);
     }
   };
 
@@ -5595,6 +5598,50 @@ var calc = function calc(size, material, options, promocode, result) {
 
 /***/ }),
 
+/***/ "./src/js/modules/changeImages.js":
+/*!****************************************!*\
+  !*** ./src/js/modules/changeImages.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var changeImages = function changeImages(src, defaultSrc) {
+  var blocks = document.querySelectorAll('.sizes-block');
+  blocks.forEach(function (block) {
+    console.log(block);
+    block.addEventListener('mouseover', function () {
+      var pSize = document.querySelector('.size'),
+          pPrice = document.querySelector('.starting-price'),
+          pFinal = document.querySelector('.final-price'),
+          img = document.querySelector('.size-1');
+      img.setAttribute('src', src);
+      pSize.style.visibility = 'hidden';
+      pPrice.style.visibility = 'hidden';
+      pFinal.style.visibility = 'hidden';
+    });
+    block.addEventListener('mouseout', function () {
+      var pSize = document.querySelector('.size'),
+          pPrice = document.querySelector('.starting-price'),
+          pFinal = document.querySelector('.final-price'),
+          img = document.querySelector('.size-1');
+      img.setAttribute('src', defaultSrc);
+      pSize.style.visibility = '';
+      pPrice.style.visibility = '';
+      pFinal.style.visibility = '';
+    });
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (changeImages);
+
+/***/ }),
+
 /***/ "./src/js/modules/changeModalState.js":
 /*!********************************************!*\
   !*** ./src/js/modules/changeModalState.js ***!
@@ -5611,8 +5658,7 @@ __webpack_require__.r(__webpack_exports__);
 var changeModalState = function changeModalState(state) {
   var picSize = document.querySelectorAll('#size'),
       picMaterial = document.querySelectorAll('#material'),
-      picOptions = document.querySelectorAll('#options'); //picTotal = document.querySelector('#hiddenfield').value;
-  //console.log(picTotal);
+      picOptions = document.querySelectorAll('#options');
 
   function bindActionToElems(event, elem, prop) {
     elem.forEach(function (item) {
@@ -5630,24 +5676,16 @@ var changeModalState = function changeModalState(state) {
             }
 
             break;
-        } //console.log(picTotal);
-        //console.log(picTotal.value);
+        }
 
-        /* picTotal.forEach(one => {
-            let total = one.value;
-            console.log(total);
-            //Object.assign(state, {total: total});
-        }); */
-
-
-        console.log(state); //console.log(picTotal.value);
+        console.log(state);
       });
     });
   }
 
   bindActionToElems('change', picSize, 'size');
   bindActionToElems('change', picMaterial, 'material');
-  bindActionToElems('change', picOptions, 'extra'); //bindActionToElems('input', picTotal, 'total');
+  bindActionToElems('change', picOptions, 'extra');
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (changeModalState);
