@@ -11,8 +11,7 @@ window.addEventListener('DOMContentLoaded', () => {
     'use strict';
 
     let modalState = {};
-
-    changeModalState(modalState);
+    
     modals();
     sliders('.feedback-slider-item', 'horizontal', '.main-prev-btn', '.main-next-btn');
     sliders('.main-slider-item', 'vertical');
@@ -22,4 +21,5 @@ window.addEventListener('DOMContentLoaded', () => {
     checkTextInputs('[name="message"]');
     showMoreStyles('.button-styles', '#styles .row');
     calc('#size', '#material', '#options', '.promocode', '.calc-price');
+    changeModalState(modalState);
 });

@@ -6,6 +6,7 @@ const calc = (size, material, options, promocode, result) => {
           optionsBlock = document.querySelector(options),
           promocodeBlock = document.querySelector(promocode),
           resultBlock = document.querySelector(result);
+          //hiddenInput = document.querySelector('#hiddenfield');
 
     let sum = 0;
 
@@ -14,12 +15,15 @@ const calc = (size, material, options, promocode, result) => {
 
         if (sizeBlock.value == '' || materialBlock.value == '') {
             resultBlock.textContent = "Пожалуйста, выберете размер и материал картины";
+            resultBlock.setAttribute('value',"0");
         } else if (promocodeBlock.value === "IWANTPOPART") {
             resultBlock.textContent = Math.round(sum * 0.7);
+            //hiddenInput.setAttribute('value',sum);
             resultBlock.setAttribute('value',sum);
         } else {
             resultBlock.textContent = sum;
             resultBlock.setAttribute('value',sum);
+            //hiddenInput.setAttribute('value',sum);
         }
 
     };

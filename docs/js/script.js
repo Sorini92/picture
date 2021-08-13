@@ -1847,70 +1847,6 @@ module.exports.f = function (C) {
 
 /***/ }),
 
-/***/ "./node_modules/core-js/internals/object-assign.js":
-/*!*********************************************************!*\
-  !*** ./node_modules/core-js/internals/object-assign.js ***!
-  \*********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "./node_modules/core-js/internals/descriptors.js");
-var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
-var objectKeys = __webpack_require__(/*! ../internals/object-keys */ "./node_modules/core-js/internals/object-keys.js");
-var getOwnPropertySymbolsModule = __webpack_require__(/*! ../internals/object-get-own-property-symbols */ "./node_modules/core-js/internals/object-get-own-property-symbols.js");
-var propertyIsEnumerableModule = __webpack_require__(/*! ../internals/object-property-is-enumerable */ "./node_modules/core-js/internals/object-property-is-enumerable.js");
-var toObject = __webpack_require__(/*! ../internals/to-object */ "./node_modules/core-js/internals/to-object.js");
-var IndexedObject = __webpack_require__(/*! ../internals/indexed-object */ "./node_modules/core-js/internals/indexed-object.js");
-
-var nativeAssign = Object.assign;
-var defineProperty = Object.defineProperty;
-
-// `Object.assign` method
-// https://tc39.github.io/ecma262/#sec-object.assign
-module.exports = !nativeAssign || fails(function () {
-  // should have correct order of operations (Edge bug)
-  if (DESCRIPTORS && nativeAssign({ b: 1 }, nativeAssign(defineProperty({}, 'a', {
-    enumerable: true,
-    get: function () {
-      defineProperty(this, 'b', {
-        value: 3,
-        enumerable: false
-      });
-    }
-  }), { b: 2 })).b !== 1) return true;
-  // should work with symbols and should have deterministic property order (V8 bug)
-  var A = {};
-  var B = {};
-  // eslint-disable-next-line no-undef
-  var symbol = Symbol();
-  var alphabet = 'abcdefghijklmnopqrst';
-  A[symbol] = 7;
-  alphabet.split('').forEach(function (chr) { B[chr] = chr; });
-  return nativeAssign({}, A)[symbol] != 7 || objectKeys(nativeAssign({}, B)).join('') != alphabet;
-}) ? function assign(target, source) { // eslint-disable-line no-unused-vars
-  var T = toObject(target);
-  var argumentsLength = arguments.length;
-  var index = 1;
-  var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
-  var propertyIsEnumerable = propertyIsEnumerableModule.f;
-  while (argumentsLength > index) {
-    var S = IndexedObject(arguments[index++]);
-    var keys = getOwnPropertySymbols ? objectKeys(S).concat(getOwnPropertySymbols(S)) : objectKeys(S);
-    var length = keys.length;
-    var j = 0;
-    var key;
-    while (length > j) {
-      key = keys[j++];
-      if (!DESCRIPTORS || propertyIsEnumerable.call(S, key)) T[key] = S[key];
-    }
-  } return T;
-} : nativeAssign;
-
-
-/***/ }),
-
 /***/ "./node_modules/core-js/internals/object-create.js":
 /*!*********************************************************!*\
   !*** ./node_modules/core-js/internals/object-create.js ***!
@@ -3380,25 +3316,6 @@ if (DESCRIPTORS && !(NAME in FunctionPrototype)) {
     }
   });
 }
-
-
-/***/ }),
-
-/***/ "./node_modules/core-js/modules/es.object.assign.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/core-js/modules/es.object.assign.js ***!
-  \**********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js/internals/export.js");
-var assign = __webpack_require__(/*! ../internals/object-assign */ "./node_modules/core-js/internals/object-assign.js");
-
-// `Object.assign` method
-// https://tc39.github.io/ecma262/#sec-object.assign
-$({ target: 'Object', stat: true, forced: Object.assign !== assign }, {
-  assign: assign
-});
 
 
 /***/ }),
@@ -5556,7 +5473,6 @@ window.addEventListener('DOMContentLoaded', function () {
   'use strict';
 
   var modalState = {};
-  Object(_modules_changeModalState__WEBPACK_IMPORTED_MODULE_7__["default"])(modalState);
   Object(_modules_modals__WEBPACK_IMPORTED_MODULE_0__["default"])();
   Object(_modules_sliders__WEBPACK_IMPORTED_MODULE_1__["default"])('.feedback-slider-item', 'horizontal', '.main-prev-btn', '.main-next-btn');
   Object(_modules_sliders__WEBPACK_IMPORTED_MODULE_1__["default"])('.main-slider-item', 'vertical');
@@ -5566,6 +5482,7 @@ window.addEventListener('DOMContentLoaded', function () {
   Object(_modules_checkTextInputs__WEBPACK_IMPORTED_MODULE_4__["default"])('[name="message"]');
   Object(_modules_showMoreStyles__WEBPACK_IMPORTED_MODULE_5__["default"])('.button-styles', '#styles .row');
   Object(_modules_calc__WEBPACK_IMPORTED_MODULE_6__["default"])('#size', '#material', '#options', '.promocode', '.calc-price');
+  Object(_modules_changeModalState__WEBPACK_IMPORTED_MODULE_7__["default"])(modalState);
 });
 
 /***/ }),
@@ -5590,7 +5507,8 @@ var calc = function calc(size, material, options, promocode, result) {
       materialBlock = document.querySelector(material),
       optionsBlock = document.querySelector(options),
       promocodeBlock = document.querySelector(promocode),
-      resultBlock = document.querySelector(result);
+      resultBlock = document.querySelector(result); //hiddenInput = document.querySelector('#hiddenfield');
+
   var sum = 0;
 
   var calcFunction = function calcFunction() {
@@ -5598,12 +5516,14 @@ var calc = function calc(size, material, options, promocode, result) {
 
     if (sizeBlock.value == '' || materialBlock.value == '') {
       resultBlock.textContent = "Пожалуйста, выберете размер и материал картины";
+      resultBlock.setAttribute('value', "0");
     } else if (promocodeBlock.value === "IWANTPOPART") {
-      resultBlock.textContent = Math.round(sum * 0.7);
+      resultBlock.textContent = Math.round(sum * 0.7); //hiddenInput.setAttribute('value',sum);
+
       resultBlock.setAttribute('value', sum);
     } else {
       resultBlock.textContent = sum;
-      resultBlock.setAttribute('value', sum);
+      resultBlock.setAttribute('value', sum); //hiddenInput.setAttribute('value',sum);
     }
   };
 
@@ -5684,18 +5604,15 @@ var calc = function calc(size, material, options, promocode, result) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var core_js_modules_es_object_assign__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.object.assign */ "./node_modules/core-js/modules/es.object.assign.js");
-/* harmony import */ var core_js_modules_es_object_assign__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_assign__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
-/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_1__);
-
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
 
 
 var changeModalState = function changeModalState(state) {
   var picSize = document.querySelectorAll('#size'),
       picMaterial = document.querySelectorAll('#material'),
-      picOptions = document.querySelectorAll('#options'),
-      picTotal = document.querySelectorAll('.calc-price');
+      picOptions = document.querySelectorAll('#options'); //picTotal = document.querySelector('#hiddenfield').value;
+  //console.log(picTotal);
 
   function bindActionToElems(event, elem, prop) {
     elem.forEach(function (item) {
@@ -5704,30 +5621,33 @@ var changeModalState = function changeModalState(state) {
           case 'SELECT':
             var index = item.selectedIndex;
 
-            if (item.selectedIndex == 0) {
-              state[prop] = "";
-            } else {
+            if (item.selectedIndex !== 0) {
+              state.total = document.querySelector('.calc-price').getAttribute('value');
               state[prop] = item[index].textContent;
+            } else {
+              state.total = document.querySelector('.calc-price').getAttribute('value');
+              state[prop] = "";
             }
 
             break;
-        }
+        } //console.log(picTotal);
+        //console.log(picTotal.value);
 
-        picTotal.forEach(function (one) {
-          var total = one.getAttribute('value');
-          console.log(total);
-          Object.assign(state, {
-            total: total
-          });
-        });
-        console.log(state); //state["total"] = picTotal.innerHTML;
+        /* picTotal.forEach(one => {
+            let total = one.value;
+            console.log(total);
+            //Object.assign(state, {total: total});
+        }); */
+
+
+        console.log(state); //console.log(picTotal.value);
       });
     });
   }
 
   bindActionToElems('change', picSize, 'size');
   bindActionToElems('change', picMaterial, 'material');
-  bindActionToElems('change', picOptions, 'extra'); //bindActionToElems('change', picTotal, 'total');
+  bindActionToElems('change', picOptions, 'extra'); //bindActionToElems('input', picTotal, 'total');
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (changeModalState);
