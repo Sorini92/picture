@@ -16,8 +16,10 @@ const calc = (size, material, options, promocode, result) => {
             resultBlock.textContent = "Пожалуйста, выберете размер и материал картины";
             resultBlock.setAttribute('value',"0");
         } else if (promocodeBlock.value === "IWANTPOPART") {
-            resultBlock.textContent = Math.round(sum * 0.7);
-            resultBlock.setAttribute('value',sum);
+            let discount = 0.7;
+            let sumWithDiscount = Math.round(sum * discount);
+            resultBlock.textContent = sumWithDiscount;
+            resultBlock.setAttribute('value',sumWithDiscount);
         } else {
             resultBlock.textContent = sum;
             resultBlock.setAttribute('value',sum);

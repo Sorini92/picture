@@ -1,29 +1,34 @@
-const changeImages = (src, defaultSrc) => {
+const changeImages = (imgSelector, src, defaultSrc) => {
     const blocks = document.querySelectorAll('.sizes-block');
     
-    blocks.forEach(block => {
-        console.log(block);
+    blocks.forEach((block) => {
         block.addEventListener('mouseover', () => {
-            const pSize = document.querySelector('.size'),
-                    pPrice = document.querySelector('.starting-price'),
-                    pFinal = document.querySelector('.final-price'),
-                    img = document.querySelector('.size-1');
+            const p = block.querySelectorAll('p'),
+                  img = block.querySelectorAll(imgSelector);
             
-                    img.setAttribute('src', src);
-                    pSize.style.visibility = 'hidden';
-                    pPrice.style.visibility = 'hidden';
-                    pFinal.style.visibility = 'hidden'; 
+            img.forEach(item => {
+                item.setAttribute('src', src);
+            });
+
+            p.forEach((item, i) => {
+                if (i === 3) {
+                    item.style.visibility = '';
+                } 
+                item.style.visibility = 'hidden';
+            });
         });
+
         block.addEventListener('mouseout', () => {
-            const pSize = document.querySelector('.size'),
-                    pPrice = document.querySelector('.starting-price'),
-                    pFinal = document.querySelector('.final-price'),
-                    img = document.querySelector('.size-1');
-        
-            img.setAttribute('src', defaultSrc);
-            pSize.style.visibility = '';
-            pPrice.style.visibility = '';
-            pFinal.style.visibility = '';
+            const p = block.querySelectorAll('p'),
+                  img = block.querySelectorAll(imgSelector);
+            
+            img.forEach(item => {
+                item.setAttribute('src', defaultSrc);
+            });
+
+            p.forEach(item => {
+                item.style.visibility = '';
+            });
         });
     });
 };

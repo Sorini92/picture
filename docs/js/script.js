@@ -5485,9 +5485,10 @@ window.addEventListener('DOMContentLoaded', function () {
   Object(_modules_showMoreStyles__WEBPACK_IMPORTED_MODULE_5__["default"])('.button-styles', '#styles .row');
   Object(_modules_calc__WEBPACK_IMPORTED_MODULE_6__["default"])('#size', '#material', '#options', '.promocode', '.calc-price');
   Object(_modules_changeModalState__WEBPACK_IMPORTED_MODULE_7__["default"])(modalState);
-  Object(_modules_changeImages__WEBPACK_IMPORTED_MODULE_8__["default"])('assets/img/sizes-1-1.png', 'assets/img/sizes-1.png'); //changeImages('.size-2','assets/img/sizes-2-2.png', 'assets/img/sizes-2.png');
-  //changeImages('.size-3','assets/img/sizes-3-3.png', 'assets/img/sizes-3.png');
-  //changeImages('.size-4','assets/img/sizes-4-4.png', 'assets/img/sizes-4.png');
+  Object(_modules_changeImages__WEBPACK_IMPORTED_MODULE_8__["default"])('.size-1', 'assets/img/sizes-1-1.png', 'assets/img/sizes-1.png');
+  Object(_modules_changeImages__WEBPACK_IMPORTED_MODULE_8__["default"])('.size-2', 'assets/img/sizes-2-1.png', 'assets/img/sizes-2.png');
+  Object(_modules_changeImages__WEBPACK_IMPORTED_MODULE_8__["default"])('.size-3', 'assets/img/sizes-3-1.png', 'assets/img/sizes-3.png');
+  Object(_modules_changeImages__WEBPACK_IMPORTED_MODULE_8__["default"])('.size-4', 'assets/img/sizes-4-1.png', 'assets/img/sizes-4.png');
 });
 
 /***/ }),
@@ -5522,8 +5523,10 @@ var calc = function calc(size, material, options, promocode, result) {
       resultBlock.textContent = "Пожалуйста, выберете размер и материал картины";
       resultBlock.setAttribute('value', "0");
     } else if (promocodeBlock.value === "IWANTPOPART") {
-      resultBlock.textContent = Math.round(sum * 0.7);
-      resultBlock.setAttribute('value', sum);
+      var discount = 0.7;
+      var sumWithDiscount = Math.round(sum * discount);
+      resultBlock.textContent = sumWithDiscount;
+      resultBlock.setAttribute('value', sumWithDiscount);
     } else {
       resultBlock.textContent = sum;
       resultBlock.setAttribute('value', sum);
@@ -5611,29 +5614,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
 
 
-var changeImages = function changeImages(src, defaultSrc) {
+var changeImages = function changeImages(imgSelector, src, defaultSrc) {
   var blocks = document.querySelectorAll('.sizes-block');
   blocks.forEach(function (block) {
-    console.log(block);
     block.addEventListener('mouseover', function () {
-      var pSize = document.querySelector('.size'),
-          pPrice = document.querySelector('.starting-price'),
-          pFinal = document.querySelector('.final-price'),
-          img = document.querySelector('.size-1');
-      img.setAttribute('src', src);
-      pSize.style.visibility = 'hidden';
-      pPrice.style.visibility = 'hidden';
-      pFinal.style.visibility = 'hidden';
+      var p = block.querySelectorAll('p'),
+          img = block.querySelectorAll(imgSelector);
+      img.forEach(function (item) {
+        item.setAttribute('src', src);
+      });
+      p.forEach(function (item, i) {
+        if (i === 3) {
+          item.style.visibility = '';
+        }
+
+        item.style.visibility = 'hidden';
+      });
     });
     block.addEventListener('mouseout', function () {
-      var pSize = document.querySelector('.size'),
-          pPrice = document.querySelector('.starting-price'),
-          pFinal = document.querySelector('.final-price'),
-          img = document.querySelector('.size-1');
-      img.setAttribute('src', defaultSrc);
-      pSize.style.visibility = '';
-      pPrice.style.visibility = '';
-      pFinal.style.visibility = '';
+      var p = block.querySelectorAll('p'),
+          img = block.querySelectorAll(imgSelector);
+      img.forEach(function (item) {
+        item.setAttribute('src', defaultSrc);
+      });
+      p.forEach(function (item) {
+        item.style.visibility = '';
+      });
     });
   });
 };
@@ -5658,7 +5664,8 @@ __webpack_require__.r(__webpack_exports__);
 var changeModalState = function changeModalState(state) {
   var picSize = document.querySelectorAll('#size'),
       picMaterial = document.querySelectorAll('#material'),
-      picOptions = document.querySelectorAll('#options');
+      picOptions = document.querySelectorAll('#options'),
+      picPromo = document.querySelectorAll('.promocode');
 
   function bindActionToElems(event, elem, prop) {
     elem.forEach(function (item) {
@@ -5676,6 +5683,14 @@ var changeModalState = function changeModalState(state) {
             }
 
             break;
+
+          case 'INPUT':
+            if (item.value === "IWANTPOPART") {
+              state[prop] = true;
+            } else {
+              state[prop] = false;
+            }
+
         }
 
         console.log(state);
@@ -5685,7 +5700,8 @@ var changeModalState = function changeModalState(state) {
 
   bindActionToElems('change', picSize, 'size');
   bindActionToElems('change', picMaterial, 'material');
-  bindActionToElems('change', picOptions, 'extra');
+  bindActionToElems('change', picOptions, 'options');
+  bindActionToElems('input', picPromo, 'promocode');
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (changeModalState);
