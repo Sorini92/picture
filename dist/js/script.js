@@ -5618,7 +5618,7 @@ var changeImages = function changeImages(imgSelector, src, defaultSrc) {
   var blocks = document.querySelectorAll('.sizes-block');
   blocks.forEach(function (block) {
     block.addEventListener('mouseover', function () {
-      var p = block.querySelectorAll('p'),
+      var p = block.querySelectorAll('.size, .starting-price, .final-price'),
           img = block.querySelectorAll(imgSelector);
       img.forEach(function (item) {
         item.setAttribute('src', src);
@@ -5632,7 +5632,7 @@ var changeImages = function changeImages(imgSelector, src, defaultSrc) {
       });
     });
     block.addEventListener('mouseout', function () {
-      var p = block.querySelectorAll('p'),
+      var p = block.querySelectorAll('.size, .starting-price, .final-price'),
           img = block.querySelectorAll(imgSelector);
       img.forEach(function (item) {
         item.setAttribute('src', defaultSrc);

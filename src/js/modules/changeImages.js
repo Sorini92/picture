@@ -3,7 +3,7 @@ const changeImages = (imgSelector, src, defaultSrc) => {
     
     blocks.forEach((block) => {
         block.addEventListener('mouseover', () => {
-            const p = block.querySelectorAll('p'),
+            const p = block.querySelectorAll('.size, .starting-price, .final-price'),
                   img = block.querySelectorAll(imgSelector);
             
             img.forEach(item => {
@@ -19,7 +19,7 @@ const changeImages = (imgSelector, src, defaultSrc) => {
         });
 
         block.addEventListener('mouseout', () => {
-            const p = block.querySelectorAll('p'),
+            const p = block.querySelectorAll('.size, .starting-price, .final-price'),
                   img = block.querySelectorAll(imgSelector);
             
             img.forEach(item => {
