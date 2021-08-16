@@ -32,6 +32,6 @@ window.addEventListener('DOMContentLoaded', () => {
     changeImages('.size-4', 'assets/img/sizes-4-1.png', 'assets/img/sizes-4.png');
     //changeImages('.sizes-block');
     filter();
-    accordion('.accordion-heading', '.accordion-block');
+    accordion('.accordion-heading');
     burger('.burger-menu', '.burger');
 }); 

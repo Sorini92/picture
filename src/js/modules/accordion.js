@@ -1,8 +1,30 @@
-const accordion = (triggersSelector, itemsSelector) => {
-    const btns = document.querySelectorAll(triggersSelector),
-          blocks = document.querySelectorAll(itemsSelector);
+const accordion = (triggersSelector) => {
+    const btns = document.querySelectorAll(triggersSelector);
+         
+    btns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            btns.forEach((btn) => {
+                if (btn !== this) {
+                    btn.classList.remove('active-style');
+                    btn.nextElementSibling.classList.remove('active-content');
+                    btn.nextElementSibling.style.maxHeight = '0px';
+               } else {
+                    this.classList.toggle('active-style');
+                    this.nextElementSibling.classList.toggle('active-content');
+               }
+            });
 
-    blocks.forEach(block => {
+            if (this.classList.contains('active-style')) {
+                this.nextElementSibling.style.maxHeight = this.nextElementSibling.scrollHeight + 80 + "px";
+            } else {
+                this.nextElementSibling.style.maxHeight = '0px';
+            }
+        })
+    })
+    
+    //blocks = document.querySelectorAll(itemsSelector);
+
+    /* blocks.forEach(block => {
         block.classList.add('animate__animated', 'animate__fadeInDown');
     });
 
@@ -15,7 +37,7 @@ const accordion = (triggersSelector, itemsSelector) => {
                 this.classList.add('active', 'active-style');
             }
         });
-    });
+    }); */
 };
 
 export default accordion;
