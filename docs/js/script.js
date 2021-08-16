@@ -5463,6 +5463,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_changeModalState__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/changeModalState */ "./src/js/modules/changeModalState.js");
 /* harmony import */ var _modules_changeImages__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/changeImages */ "./src/js/modules/changeImages.js");
 /* harmony import */ var _modules_filter__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/filter */ "./src/js/modules/filter.js");
+/* harmony import */ var _modules_accordion__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/accordion */ "./src/js/modules/accordion.js");
+/* harmony import */ var _modules_burger__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modules/burger */ "./src/js/modules/burger.js");
+
+
 
 
 
@@ -5493,7 +5497,75 @@ window.addEventListener('DOMContentLoaded', function () {
   Object(_modules_changeImages__WEBPACK_IMPORTED_MODULE_8__["default"])('.size-4', 'assets/img/sizes-4-1.png', 'assets/img/sizes-4.png'); //changeImages('.sizes-block');
 
   Object(_modules_filter__WEBPACK_IMPORTED_MODULE_9__["default"])();
+  Object(_modules_accordion__WEBPACK_IMPORTED_MODULE_10__["default"])('.accordion-heading', '.accordion-block');
+  Object(_modules_burger__WEBPACK_IMPORTED_MODULE_11__["default"])('.burger-menu', '.burger');
 });
+
+/***/ }),
+
+/***/ "./src/js/modules/accordion.js":
+/*!*************************************!*\
+  !*** ./src/js/modules/accordion.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var accordion = function accordion(triggersSelector, itemsSelector) {
+  var btns = document.querySelectorAll(triggersSelector),
+      blocks = document.querySelectorAll(itemsSelector);
+  blocks.forEach(function (block) {
+    block.classList.add('animate__animated', 'animate__fadeInDown');
+  });
+  btns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      if (!this.classList.contains('active')) {
+        btns.forEach(function (btn) {
+          btn.classList.remove('active', 'active-style');
+        });
+        this.classList.add('active', 'active-style');
+      }
+    });
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (accordion);
+
+/***/ }),
+
+/***/ "./src/js/modules/burger.js":
+/*!**********************************!*\
+  !*** ./src/js/modules/burger.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var burger = function burger(menuSelector, burgerSelector) {
+  var menuElem = document.querySelector(menuSelector),
+      burgerElem = document.querySelector(burgerSelector);
+  menuElem.style.display = 'none';
+  burgerElem.addEventListener('click', function () {
+    if (menuElem.style.display == 'none' && window.screen.availWidth < 993) {
+      menuElem.style.display = 'block';
+    } else {
+      menuElem.style.display = 'none';
+    }
+  });
+  window.addEventListener('resize', function () {
+    if (window.screen.availWidth > 992) {
+      menuElem.style.display = 'none';
+    }
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (burger);
 
 /***/ }),
 
@@ -5805,13 +5877,11 @@ var filter = function filter() {
     no.classList.remove('animate__animated', 'animate__fadeIn');
 
     if (wrapper.querySelectorAll(markType).length > 0) {
-      console.log(wrapper.querySelectorAll(markType));
       wrapper.querySelectorAll(markType).forEach(function (mark) {
         mark.style.display = 'block';
         mark.classList.add('animate__animated', 'animate__fadeIn');
       });
     } else {
-      console.log(wrapper.querySelectorAll(markType));
       no.style.display = 'block';
       no.classList.add('animate__animated', 'animate__fadeIn');
     }

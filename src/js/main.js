@@ -8,6 +8,8 @@ import calc from './modules/calc';
 import changeModalState from './modules/changeModalState';
 import changeImages from './modules/changeImages';
 import filter from './modules/filter';
+import accordion from './modules/accordion';
+import burger from './modules/burger';
 
 window.addEventListener('DOMContentLoaded', () => {
     'use strict';
@@ -30,4 +32,6 @@ window.addEventListener('DOMContentLoaded', () => {
     changeImages('.size-4', 'assets/img/sizes-4-1.png', 'assets/img/sizes-4.png');
     //changeImages('.sizes-block');
     filter();
+    accordion('.accordion-heading', '.accordion-block');
+    burger('.burger-menu', '.burger');
 }); 

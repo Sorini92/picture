@@ -15,13 +15,11 @@ const filter = () => {
         no.classList.remove('animate__animated', 'animate__fadeIn');
 
         if (wrapper.querySelectorAll(markType).length > 0) {
-            console.log(wrapper.querySelectorAll(markType));
             wrapper.querySelectorAll(markType).forEach(mark => {
                 mark.style.display = 'block';
                 mark.classList.add('animate__animated', 'animate__fadeIn');
             });
         } else {
-            console.log(wrapper.querySelectorAll(markType));
             no.style.display = 'block';
             no.classList.add('animate__animated', 'animate__fadeIn');
         }
