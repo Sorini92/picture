@@ -5462,6 +5462,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_calc__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/calc */ "./src/js/modules/calc.js");
 /* harmony import */ var _modules_changeModalState__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/changeModalState */ "./src/js/modules/changeModalState.js");
 /* harmony import */ var _modules_changeImages__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/changeImages */ "./src/js/modules/changeImages.js");
+/* harmony import */ var _modules_filter__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/filter */ "./src/js/modules/filter.js");
+
 
 
 
@@ -5488,7 +5490,9 @@ window.addEventListener('DOMContentLoaded', function () {
   Object(_modules_changeImages__WEBPACK_IMPORTED_MODULE_8__["default"])('.size-1', 'assets/img/sizes-1-1.png', 'assets/img/sizes-1.png');
   Object(_modules_changeImages__WEBPACK_IMPORTED_MODULE_8__["default"])('.size-2', 'assets/img/sizes-2-1.png', 'assets/img/sizes-2.png');
   Object(_modules_changeImages__WEBPACK_IMPORTED_MODULE_8__["default"])('.size-3', 'assets/img/sizes-3-1.png', 'assets/img/sizes-3.png');
-  Object(_modules_changeImages__WEBPACK_IMPORTED_MODULE_8__["default"])('.size-4', 'assets/img/sizes-4-1.png', 'assets/img/sizes-4.png');
+  Object(_modules_changeImages__WEBPACK_IMPORTED_MODULE_8__["default"])('.size-4', 'assets/img/sizes-4-1.png', 'assets/img/sizes-4.png'); //changeImages('.sizes-block');
+
+  Object(_modules_filter__WEBPACK_IMPORTED_MODULE_9__["default"])();
 });
 
 /***/ }),
@@ -5621,30 +5625,58 @@ var changeImages = function changeImages(imgSelector, src, defaultSrc) {
       var p = block.querySelectorAll('.size, .starting-price, .final-price'),
           img = block.querySelectorAll(imgSelector);
       img.forEach(function (item) {
-        item.setAttribute('src', src);
+        return item.setAttribute('src', src);
       });
-      p.forEach(function (item, i) {
-        if (i === 3) {
-          item.style.visibility = '';
-        }
-
-        item.style.visibility = 'hidden';
+      p.forEach(function (item) {
+        return item.style.visibility = 'hidden';
       });
     });
     block.addEventListener('mouseout', function () {
       var p = block.querySelectorAll('.size, .starting-price, .final-price'),
           img = block.querySelectorAll(imgSelector);
       img.forEach(function (item) {
-        item.setAttribute('src', defaultSrc);
+        return item.setAttribute('src', defaultSrc);
       });
       p.forEach(function (item) {
-        item.style.visibility = '';
+        return item.style.visibility = '';
       });
     });
   });
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (changeImages);
+/* сonst changeImages = (imgSelector) => {
+    const blocks = document.querySelectorAll(imgSelector);
+
+    function showImg (block) {
+        const img = block.querySelector('img');
+        // something.png => something-1.png
+        img.src = img.src.slice(0, -4) + '-1.png';
+        block.querySelectorAll('p:not(.sizes-hit)').forEach(p => {
+            p.style.display = 'none';
+        });
+    }
+
+    function hideImg (block) {
+        const img = block.querySelector('img');
+        // something-1.png => something.png
+        img.src = img.src.slice(0, -6) + '.png';
+        block.querySelectorAll('p:not(.sizes-hit)').forEach(p => {
+            p.style.display = 'block';
+        });
+    }
+
+    blocks.forEach(block => {
+        block.addEventListener('mouseover', () => {
+            showImg(block);
+        });
+        block.addEventListener('mouseout', () => {
+            hideImg(block);
+        });
+    });
+};
+
+export default changeImages; */
 
 /***/ }),
 
@@ -5741,6 +5773,76 @@ var checkTextInputs = function checkTextInputs(selector) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (checkTextInputs);
+
+/***/ }),
+
+/***/ "./src/js/modules/filter.js":
+/*!**********************************!*\
+  !*** ./src/js/modules/filter.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var filter = function filter() {
+  var menu = document.querySelector('.portfolio-menu'),
+      items = menu.querySelectorAll('li'),
+      wrapper = document.querySelector('.portfolio-wrapper'),
+      markAll = wrapper.querySelectorAll('.all'),
+      no = document.querySelector('.portfolio-no');
+
+  var typeFilter = function typeFilter(markType) {
+    markAll.forEach(function (mark) {
+      mark.style.display = 'none';
+      mark.classList.remove('animate__animated', 'animate__fadeIn');
+    });
+    no.style.display = 'none';
+    no.classList.remove('animate__animated', 'animate__fadeIn');
+
+    if (wrapper.querySelectorAll(markType).length > 0) {
+      console.log(wrapper.querySelectorAll(markType));
+      wrapper.querySelectorAll(markType).forEach(function (mark) {
+        mark.style.display = 'block';
+        mark.classList.add('animate__animated', 'animate__fadeIn');
+      });
+    } else {
+      console.log(wrapper.querySelectorAll(markType));
+      no.style.display = 'block';
+      no.classList.add('animate__animated', 'animate__fadeIn');
+    }
+  };
+
+  function menuButtons(btn, mark) {
+    menu.querySelector(btn).addEventListener('click', function () {
+      typeFilter(mark);
+    });
+  }
+
+  menuButtons('.all', '.all');
+  menuButtons('.lovers', '.lovers');
+  menuButtons('.chef', '.chef');
+  menuButtons('.girl', '.girl');
+  menuButtons('.guy', '.guy');
+  menuButtons('.grandmother');
+  menuButtons('.granddad');
+  menu.addEventListener('click', function (e) {
+    var target = e.target;
+
+    if (target && target.tagName == "LI") {
+      items.forEach(function (btn) {
+        return btn.classList.remove('active');
+      });
+      target.classList.add('active');
+    }
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (filter);
 
 /***/ }),
 

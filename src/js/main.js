@@ -7,6 +7,7 @@ import showMoreStyles from './modules/showMoreStyles';
 import calc from './modules/calc';
 import changeModalState from './modules/changeModalState';
 import changeImages from './modules/changeImages';
+import filter from './modules/filter';
 
 window.addEventListener('DOMContentLoaded', () => {
     'use strict';
@@ -24,7 +25,9 @@ window.addEventListener('DOMContentLoaded', () => {
     calc('#size', '#material', '#options', '.promocode', '.calc-price');
     changeModalState(modalState);
     changeImages('.size-1', 'assets/img/sizes-1-1.png', 'assets/img/sizes-1.png');
-    changeImages('.size-2','assets/img/sizes-2-1.png', 'assets/img/sizes-2.png');
-    changeImages('.size-3','assets/img/sizes-3-1.png', 'assets/img/sizes-3.png');
-    changeImages('.size-4','assets/img/sizes-4-1.png', 'assets/img/sizes-4.png');
-});
+    changeImages('.size-2', 'assets/img/sizes-2-1.png', 'assets/img/sizes-2.png');
+    changeImages('.size-3', 'assets/img/sizes-3-1.png', 'assets/img/sizes-3.png');
+    changeImages('.size-4', 'assets/img/sizes-4-1.png', 'assets/img/sizes-4.png');
+    //changeImages('.sizes-block');
+    filter();
+}); 
