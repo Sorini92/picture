@@ -5551,7 +5551,7 @@ var accordion = function accordion(triggersSelector) {
   /* blocks.forEach(block => {
       block.classList.add('animate__animated', 'animate__fadeInDown');
   });
-   btns.forEach(btn => {
+    btns.forEach(btn => {
       btn.addEventListener('click', function() {
           if (!this.classList.contains('active')) {
               btns.forEach(btn => {
@@ -5886,7 +5886,69 @@ var checkTextInputs = function checkTextInputs(selector) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var drop = function drop() {};
+/* harmony import */ var core_js_modules_es_function_name__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.function.name */ "./node_modules/core-js/modules/es.function.name.js");
+/* harmony import */ var core_js_modules_es_function_name__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_function_name__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_string_split__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.string.split */ "./node_modules/core-js/modules/es.string.split.js");
+/* harmony import */ var core_js_modules_es_string_split__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_split__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+
+var drop = function drop() {
+  var fileInputs = document.querySelectorAll('[name="upload"]');
+  ['dragenter', 'dragleave', 'dragover', 'drop'].forEach(function (eventName) {
+    fileInputs.forEach(function (input) {
+      input.addEventListener(eventName, preventDefaults, false);
+    });
+  });
+
+  function preventDefaults(e) {
+    e.preventDefaults();
+    e.stopPropagation();
+  }
+
+  function hightlight(item) {
+    item.closest('.file_upload').style.border = '5px solid yellow';
+    item.closest('.file_upload').style.backgroundColor = 'rgba(0,0,0, 0.7)';
+  }
+
+  function unhightlight(item) {
+    item.closest('.file_upload').style.border = 'none';
+
+    if (item.closest('.calc_form')) {
+      item.closest('.file_upload').style.backgroundColor = '#fff';
+    } else {
+      item.closest('.file_upload').style.backgroundColor = '#ededed';
+    }
+  }
+
+  ['dragenter', 'dragover'].forEach(function (eventName) {
+    fileInputs.forEach(function (input) {
+      input.addEventListener(eventName, function () {
+        return hightlight(input);
+      }, false);
+    });
+  });
+  ['dragleave', 'drop'].forEach(function (eventName) {
+    fileInputs.forEach(function (input) {
+      input.addEventListener(eventName, function () {
+        return unhightlight(input);
+      }, false);
+    });
+  });
+  fileInputs.forEach(function (input) {
+    input.addEventListener('drop', function (e) {
+      input.files = e.dataTransfer.files;
+      var dots;
+      var arr = input.files[0].name.split('.');
+      arr[0].length > 6 ? dots = "..." : dots = '.';
+      var name = arr[0].substring(0, 6) + dots + arr[1];
+      input.previousElementSibling.textContent = name;
+    });
+  });
+};
 
 /* harmony default export */ __webpack_exports__["default"] = (drop);
 
@@ -6367,10 +6429,10 @@ var scrolling = function scrolling(upSelector) {
 
   /* const element = document.documentElement,
         body = document.body;
-   const calcScroll = () => {
+    const calcScroll = () => {
       upElem.addEventListener('click', function(event) {
           let scrollTop = Math.round(body.scrollTop || element.scrollTop);
-           if (this.hash !== '') {
+            if (this.hash !== '') {
               event.preventDefault();
               let hashElement = document.querySelector(this.hash),
                   hashElementTop = 0;
@@ -6379,23 +6441,23 @@ var scrolling = function scrolling(upSelector) {
                   hashElementTop += hashElement.offsetTop;
                   hashElement = hashElement.offsetParent;
               }
-               hashElementTop = Math.round(hashElementTop);
+                hashElementTop = Math.round(hashElementTop);
               smoothScroll(scrollTop, hashElementTop, this.hash);
           }
       });
   };
-   const smoothScroll = (from, to, hash) => {
+    const smoothScroll = (from, to, hash) => {
       let timeInterval = 1,
           prevScrollTop,
           speed;
-       if (to > from) {
+        if (to > from) {
           speed = 30;
       } else {
           speed = -30;
       }
-       let move = setInterval(function() {
+        let move = setInterval(function() {
           let scrollTop = Math.round(body.scrollTop || element.scrollTop);
-           if (
+            if (
               prevScrollTop === scrollTop ||
               (to > from && scrollTop >= to) ||
               (to < from && scrollTop <= to)
@@ -6409,7 +6471,7 @@ var scrolling = function scrolling(upSelector) {
           }
       }, timeInterval);
   };
-   calcScroll(); */
+    calcScroll(); */
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (scrolling);
