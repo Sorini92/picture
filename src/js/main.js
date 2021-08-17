@@ -10,6 +10,7 @@ import changeImages from './modules/changeImages';
 import filter from './modules/filter';
 import accordion from './modules/accordion';
 import burger from './modules/burger';
+import scrolling from './modules/scrolling';
 
 window.addEventListener('DOMContentLoaded', () => {
     'use strict';
@@ -34,4 +35,5 @@ window.addEventListener('DOMContentLoaded', () => {
     filter();
     accordion('.accordion-heading');
     burger('.burger-menu', '.burger');
+    scrolling('.pageup');
 }); 
