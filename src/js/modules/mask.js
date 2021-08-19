@@ -4,7 +4,7 @@ const mask = (selector) => {
         elem.focus();
         
         if (elem.setSelectionRange) {
-            elem.setSelectionRange(pos, pos);
+            elem.setSelectionRange(pos, pos);//устанавливает начальное и конечное положение выделения текста
         } else if (elem.createTextRange) {
             let range = elem.createTextRange();
 

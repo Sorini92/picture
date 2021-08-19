@@ -24,10 +24,7 @@ const calc = (size, material, options, promocode, result) => {
             resultBlock.textContent = sum;
             resultBlock.setAttribute('value',sum);
         }
-
     };
-
-    
 
     getResource('assets/db.json')
             .then(res => {

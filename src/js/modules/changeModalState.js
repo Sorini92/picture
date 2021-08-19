@@ -24,7 +24,7 @@ const changeModalState = (state) => {
                         } else {
                             state[prop] = false;
                         }
-                        
+                    break;
                 }
                 console.log(state);
             });
